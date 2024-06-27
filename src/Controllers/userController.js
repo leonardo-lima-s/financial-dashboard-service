@@ -20,13 +20,11 @@ const signup = async (req, res) => {
 			let token = jwt.sign({ id: user.id }, process.env.secretKey, { expiresIn: 1 * 24 * 60 * 60 * 100 });
 
 			res.cookie("jwt", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true });
-			console.log("user", JSON.stringify(user, null, 2));
-			console.log(token);
 
 			//send users details
 			return res.status(201).send(user);
 		} else {
-			return res.status(409).send("Details are not correct!");
+			return res.status(400).send("Details are not correct!");
 		}
 	} catch (error) {
 		console.log(error);
@@ -51,10 +49,8 @@ const login = async (req, res) => {
 					expiresIn: 1 * 24 * 60 * 60 * 1000,
 				});
 				res.cookie("jwt", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true });
-				console.log("user", JSON.stringify(user, null, 2));
-				console.log(token);
 				//send user data
-				return res.status(201).send(user);
+				return res.status(200).send(user);
 			} else {
 				return res.status(401).send("Authentication failed");
 			}
