@@ -10,14 +10,14 @@ const saveUser = async (req, res, next) => {
 		//if username exist in the database respond with a status of 409
 		const username = await User.findOne({ where: { userName: req.body.userName } });
 		if (username) {
-			return res.json(409).send("username already taken");
+			return res.status(409).send("Nome de usuário já existente");
 		}
 
 		//checking if email already exist
 		//if email exist in the database respond with a status of 409
 		const emailCheck = await User.findOne({ where: { email: req.body.email } });
 		if (emailCheck) {
-			return res.json(409).send("Authentication failed");
+			return res.status(409).send("E-mail já está sendo utilizado");
 		}
 
 		next();

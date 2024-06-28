@@ -24,7 +24,7 @@ const signup = async (req, res) => {
 			//send users details
 			return res.status(201).send(user);
 		} else {
-			return res.status(400).send("Details are not correct!");
+			return res.status(409).send("Dados do usuário não estão corretos.");
 		}
 	} catch (error) {
 		console.log(error);
@@ -52,10 +52,10 @@ const login = async (req, res) => {
 				//send user data
 				return res.status(200).send(user);
 			} else {
-				return res.status(401).send("Authentication failed");
+				return res.status(401).send("Senha incorreta");
 			}
 		} else {
-			return res.status(401).send("Authentication failed");
+			return res.status(401).send("Usuário não encontrado");
 		}
 	} catch (error) {
 		console.log(error);
