@@ -26,6 +26,25 @@ const saveUser = async (req, res, next) => {
 	}
 };
 
+const resetUserPassword = async (req, res, next) => {
+	try {
+		const username = await User.findOne({ where: { userName: req.body.userName } });
+		if (!username) {
+			return res.status(400).send("Nome de usuário não encontrado");
+		}
+
+		const emailCheck = await User.findOne({ where: { email: req.body.email } });
+		if (!emailCheck) {
+			return res.status(400).send("E-mail não encontrado");
+		}
+
+		next();
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 module.exports = {
 	saveUser,
+	resetUserPassword,
 };

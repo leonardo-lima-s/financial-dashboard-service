@@ -62,7 +62,24 @@ const login = async (req, res) => {
 	}
 };
 
+const resetPassword = async (req, res) => {
+	try {
+		const { userName, email, newPassword } = req.body;
+		const data = { password: await bcrypt.hash(newPassword, 10) };
+		const result = await User.update(data, { where: { userName, email } });
+
+		if (result) {
+			return res.status(200).send(result);
+		} else {
+			return res.status(400).send("Erro ao recuperar a senha");
+		}
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 module.exports = {
 	signup,
 	login,
+	resetPassword,
 };
